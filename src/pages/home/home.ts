@@ -10,29 +10,29 @@ import { AuthService } from '../../services/auth.service';
 })
 export class HomePage {
 
-  creds : CredenciaisDTO = {
+  creds: CredenciaisDTO = {
     email: "",
     senha: ""
   };
 
-  constructor(public navCtrl: NavController, 
-    public menu: MenuController, 
+  constructor(public navCtrl: NavController,
+    public menu: MenuController,
     public auth: AuthService) {
 
   }
 
   ionViewWillEnter() {
     this.menu.swipeEnable(false);
-    }
+  }
 
-  ionViewDidEnter(){
+  ionViewDidEnter() {
     this.auth.refreshToken()
-    .subscribe(response => {
-      this.auth.successfulLogin(response.headers.get('Authorization'));
-      this.navCtrl.setRoot('CategoriasPage');  
-    },
-    error => {});    
-} 
+      .subscribe(response => {
+        this.auth.successfulLogin(response.headers.get('Authorization'));
+        this.navCtrl.setRoot('CategoriasPage');
+      },
+        error => { });
+  }
 
   ionViewDidLeave() {
     this.menu.swipeEnable(true);
@@ -40,10 +40,15 @@ export class HomePage {
 
   login() {
     this.auth.authenticate(this.creds)
-    .subscribe(response => {
-      this.auth.successfulLogin(response.headers.get('Authorization'));
-      this.navCtrl.setRoot('CategoriasPage');
-    },
-    error => {});    
-}
+      .subscribe(response => {
+        this.auth.successfulLogin(response.headers.get('Authorization'));
+        this.navCtrl.setRoot('CategoriasPage');
+      },
+        error => { });
+  }
+
+  signup() {
+    this.navCtrl.push('SignupPage');
+  }
+
 }
